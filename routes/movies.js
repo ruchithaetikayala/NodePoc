@@ -4,52 +4,46 @@ var axios = require('axios');
 var movieService = require('../service/movieServices');
 var CB=require('../circuit-breaker');
 
-const movie = movieService.getmovie;
-const page = movieService.getpage;
-const date = movieService.getdate;
-const popularity = movieService.getpopularity;
-const rating = movieService.getrate;
-const genre = movieService.getgenres;
-const dp = movieService.getAll;
-
-
    router.get('/', CB , function(req, res, next) 
    {
-         movie(req,res);
+    movieService.getmovie(req,res);
+        
     });
 
-   
     router.get('/page', CB , function(req, res, next)
      {
-         page(req,res);
+         movieService.getpage(req,res);
         
      });
 
-    router.get('/date', CB , function(req, res, next)
+ 
+     router.get('/date', CB , function(req, res, next)
      {
-         date(req,res);
+         movieService.getdate(req,res);
      });  
         
-        
-    router.get('/popularity', CB ,  function(req, res, next)
+   router.get('/popularity', CB ,  function(req, res, next)
     {
-          popularity(req,res);
+        movieService.getpopularity(req,res);
             
     });        
 
+  
     router.get('/rating',  CB , function(req, res, next)
     {
-         rating(req,res);
+        movieService.getrate(req,res);
     });
-    
+  
+   
     router.get('/genre',  CB , function(req, res, next) 
     {
-         genre(req,res);
+        movieService.getgenres(req,res);
      });
 
+  
      router.get('/all',  CB , function(req, res, next) 
     {
-         dp(req,res);
+        movieService.getAll(req,res);
      });
 
-    module.exports = router;
+module.exports = router;

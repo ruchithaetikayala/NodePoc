@@ -18,13 +18,13 @@ function getpage(req,res,next){
 }
 
 function getdate(req,res){
-    var date = req.headers['date']
+    var date = req.headers['date1']
            //console.log(res);
             var sam1 = [];
             axios.get(links.moviesLink).then(response => {
                // var sam1=response.data.results.filter(result => (result.release_date == date));
                 var sam = response.data.results
-                if(date == ""){
+                if(date == "" || date == undefined){
                     res.send(sam);
                 }else{
                     sam.forEach(element => { 
@@ -47,7 +47,7 @@ function getpopularity(req,res){
      axios.get(links.moviesLink).then(response => {
          //var sam1=response.data.results.filter(result => (result.popularity <= popularity));
         var sam = response.data.results
-        if(popularity == ""){
+        if(popularity == "" || popularity == undefined){
             res.send(sam);
         }else{
             sam.forEach(element => { 
@@ -70,7 +70,7 @@ function getrate(req,res){
     var sam1 = [];
     axios.get(links.moviesLink).then(response => {
     var sam = response.data.results
-    if(rating == ""){
+    if(rating == "" || rating ==undefined){
         res.send(sam);
     }else{
         sam.forEach(element => { 
@@ -89,8 +89,14 @@ function getrate(req,res){
 
 function getgenres(req,res){
                  var name = req.headers.genre;
-                var name1 = name.split(",");//spliied to save as array
+                 var name1;
+                 if(name == undefined || name ==""){
+                    name1 = name;//spliied to save as array
                //console.log(name1);
+                 }
+               else{
+                   name1=name.split(",");
+               }
                 Promise.all([
                     axios.get(links.moviesLink),
                     axios.get(links.genresLink)
@@ -102,7 +108,7 @@ function getgenres(req,res){
                     }));// taking into singal array
                 }).then(function (data) {
                     console.log(data[0].popularity);
-                    if(name1 == ""){
+                    if(name1 == "" || name1 == undefined){
                         res.send(data[0])
                     }else{
                         var sam = [];// based on  input header from line number 118  fecthing genre names and ids
@@ -141,8 +147,16 @@ function getgenres(req,res){
 
 function getAll(req,res){
                 var name = req.headers.genre;
-                var name1 = name.split(",");//spliied to save as array
+                var name1;
+                if(name == undefined || name ==""){
+                    name1 = name;//spliied to save as array
+               //console.log(name1);
+                 }
+               else{
+                   name1=name.split(",");
+               }//spliied to save as array
                 var popularity = req.headers['popularity'];
+                var date = req.headers['date1'];
                //console.log(name1);
                 Promise.all([
                     axios.get(links.moviesLink),
@@ -156,10 +170,12 @@ function getAll(req,res){
                 }).then(function (data) {
                     // var sample=data[0].results.filter(result=>result.popularity<=popularity);
                     // console.log(sample);
-                    if(name1 == "" && popularity == ""){
-                        res.send(data[0])
+                    var sam = [];
+                    var sam3 = [];
+                    if(name1 == "" || name1 == undefined){
+                        sam3=data[0].results;
                     }else{
-                        var sam = [];// based on  input header from line number 118  fecthing genre names and ids
+                        // based on  input header from line number 118  fecthing genre names and ids
                     data[1].genres.filter(result => name1.forEach(element => {
                             if((element == result.name)  ){
                                 sam.push(result);
@@ -170,32 +186,39 @@ function getAll(req,res){
                     var sam1 = [];//fetching ids from sam
                     sam.forEach(element => {
                         sam1.push(element.id);
-                    })
-                    
-                    //console.log(sam1)
-            
-                 var sam3 = [];//fecting movie list using genre_ids which is comnig from sam1..
+                    }) 
+                 //fecting movie list using genre_ids which is comnig from sam1..
                 data[0].results.filter(element => {
                     for(var i = 0; i < element.genre_ids.length; i++){
-                    if((sam1.indexOf(element.genre_ids[i]) != -1) || (element.popularity <= popularity)){
+                    if((sam1.indexOf(element.genre_ids[i]) != -1)  ){
                     sam3.push(element);
                      break;
                      }
-                    //else{
-                    //     result=[];
-                    // }
                     }
                     })
-                   // console.log(sam3);
-                    res.send(sam3);
                     }
+                    if(popularity=="" || popularity == undefined)
+                        sam5 = sam3;
+                        else{
+                    var sam5 = sam3.filter(result => (result.popularity <= popularity))
+                    //res.send(sam5);
+                        }
+                        if(date == "" || date == undefined){
+                        sam6 = sam5;
+                        //console.log("entered")
+                        }
+                        else{
+                    var sam6 = sam5.filter(result => (result.release_date == date))
                     
+                        }
+                        res.send(sam6)
                 }).catch(function (error) {
                     // if there's an error, log it
                     console.log(error);
                 });
      
 }
+
 module.exports = {
     getmovie,
     getpage,

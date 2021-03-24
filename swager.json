@@ -1,0 +1,183 @@
+{
+    "openapi": "3.0.0",
+    
+    "info" : {
+        "title" : "Movies Api document",
+        "description" : "Movie info",
+        "version" : "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Movies",
+            "description": "API for movies in the system"
+        }
+    ],
+    "paths" :{
+        "/movies":{
+            "get" : {
+                 "tags": [
+                        "Movies"
+                    ],
+                 "description":"List of all movies",
+                 "responses" : {
+                        "200" : {
+                        "description": "OK "
+                    }
+    
+                }
+            }
+        },
+    "/movies/page":{
+        "parameters":[{
+            "name": "page",
+            "type": "string",
+            "description": "needed as header",
+            "in": "header"
+        }],
+            "get":{
+                "tags":[
+                    "Movies"
+                ],
+            "description":"movies list based on page Number",
+            "responses":{
+            "200":{
+                "description":"OK"
+            }
+         },
+            "400":{
+                "description":"Falied"
+             }
+         }
+         },
+
+         "/movies/date":{
+            "parameters":[{
+                "name": "date1",
+                "type": "string",
+                "description": "needed as header",
+                "in": "header"
+            }],
+                "get":{
+                    "tags":[
+                        "Movies"
+                    ],
+                "descrption":"movies list based on date",
+                "responses":{
+                "200":{
+                    "description":"OK"
+                }
+             },
+                "400":{
+                    "description":"Falied"
+                 }
+             }
+             },
+             "/movies/popularity":{
+                "parameters":[{
+                    "name": "popularity",
+                    "type": "string",
+                    "description": "needed as header",
+                    "in": "header"
+                }],
+                    "get":{
+                        "tags":[
+                            "Movies"
+                        ],
+                    "descrption":"movies list based on date",
+                    "responses":{
+                    "200":{
+                        "description":"OK"
+                    }
+                 },
+                    "400":{
+                        "description":"Falied"
+                     }
+                 }
+                 },
+                 "/movies/rating":{
+                    "parameters":[{
+                        "name": "rating",
+                        "type": "string",
+                        "description": "needed as header",
+                        "in": "header"
+                    }],
+                        "get":{
+                            "tags":[
+                                "Movies"
+                            ],
+                        "descrption":"movies list based on date",
+                        "responses":{
+                        "200":{
+                            "description":"OK"
+                        }
+                     },
+                        "400":{
+                            "description":"Falied"
+                         }
+                     }
+                     },
+                     "/movies/genre":{
+                        "parameters":[{
+                            "name": "genre",
+                            "type": "string",
+                            "description": "needed as header",
+                            "in": "header"
+                        }],
+                            "get":{
+                                "tags":[
+                                    "Movies"
+                                ],
+                            "descrption":"movies list based on date",
+                            "responses":{
+                            "200":{
+                                "description":"OK"
+                            }
+                         },
+                            "400":{
+                                "description":"Falied"
+                             }
+                         }
+                         },
+                         "/movies/all":{
+                            "parameters":[{
+                                "name": "genre",
+                                "type": "string",
+                                "description": "needed as header",
+                                "in": "header"
+                            },
+                            {
+                            "name": "popularity",
+                            "type": "string",
+                            "description": "needed as header",
+                            "in": "header"
+                            },
+                            {
+
+                                "name": "date1",
+                                "type": "string",
+                                "description": "needed as header",
+                                "in": "header"
+                            }
+                        ],
+                                "get":{
+                                    "tags":[
+                                        "Movies"
+                                    ],
+                                "descrption":"movies list based on date",
+                                "responses":{
+                                "200":{
+                                    "description":"OK"
+                                }
+                             },
+                                "400":{
+                                    "description":"Falied"
+                                 }
+                             }
+                             }
+            
+        
+    
+
+             
+    } 
+}
